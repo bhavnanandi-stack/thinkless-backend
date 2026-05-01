@@ -47,7 +47,7 @@ async def generate_post(
             }
 
     except Exception as e:
-    print("GEMINI ERROR:", str(e))
+        print("GEMINI ERROR:", str(e))
 
         return {
             "recommended": {
