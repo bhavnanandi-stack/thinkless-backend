@@ -46,24 +46,26 @@ async def generate_post(
                 }
             }
 
-    except Exception:
+    except Exception as e:
+    print("GEMINI ERROR:", str(e))
+
         return {
             "recommended": {
-                "caption": "AI temporarily unavailable — fallback response.",
-                "hook": "Keep creating.",
-                "cta": "Save this idea.",
-                "hashtags": ["#creator"],
-                "reason": "Fallback mode",
-                "target": "Engagement"
+                "caption": f"AI temporarily unavailable — {str(e)}",
+                "hook": "Fallback mode",
+                "cta": "Retry later",
+                "hashtags": ["#fallback"],
+                "reason": "Gemini exception caught",
+                "target": "Debug"
             },
             "alternative_1": {
-                "caption": "Creators win through consistency.",
-                "reason": "Fallback",
+                "caption": "Fallback response",
+                "reason": "Debug",
                 "target": "Reach"
             },
             "alternative_2": {
-                "caption": "Your next post matters.",
-                "reason": "Fallback",
+                "caption": "Fallback response",
+                "reason": "Debug",
                 "target": "Engagement"
             }
         }
