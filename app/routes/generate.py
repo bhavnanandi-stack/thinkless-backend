@@ -27,4 +27,4 @@ async def generate_post(
             "reason": "Relatable storytelling builds trust.",
             "target": "Engagement"
         }
-    }
+    } 
