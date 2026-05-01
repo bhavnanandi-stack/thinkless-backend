@@ -1,4 +1,5 @@
 from fastapi import APIRouter, UploadFile, File, Form
+from app.services.gemini_service import generate_social_post
 
 router = APIRouter()
 
