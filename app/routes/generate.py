@@ -19,26 +19,29 @@ async def generate_post(
     )
 
     try:
-        parsed = json.loads(ai_response)
-        return parsed
+    ai_response = generate_social_post(
+        image_description=image_description,
+        intent=intent or "",
+        platform=platform
+    )
     except Exception:
-        return {
-            "recommended": {
-                "caption": ai_response,
-                "hook": "AI Generated",
-                "cta": "Save this post",
-                "hashtags": ["#thinkless"],
-                "reason": "Fallback parser triggered",
-                "target": "Engagement"
-            },
-            "alternative_1": {
-                "caption": "Alternative caption unavailable.",
-                "reason": "Fallback",
-                "target": "Reach"
-            },
-            "alternative_2": {
-                "caption": "Alternative caption unavailable.",
-                "reason": "Fallback",
-                "target": "Engagement"
-            }
+    return {
+        "recommended": {
+            "caption": "AI temporarily unavailable — fallback response.",
+            "hook": "Keep creating.",
+            "cta": "Save this idea.",
+            "hashtags": ["#creator"],
+            "reason": "Fallback mode",
+            "target": "Engagement"
+        },
+        "alternative_1": {
+            "caption": "Creators win through consistency.",
+            "reason": "Fallback",
+            "target": "Reach"
+        },
+        "alternative_2": {
+            "caption": "Your next post matters.",
+            "reason": "Fallback",
+            "target": "Engagement"
         }
+    }
