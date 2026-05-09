@@ -8,30 +8,40 @@ client = Anthropic(
 def generate_social_post(image_description, intent, platform):
 
     prompt = f"""
-      Generate Instagram post content.
+      You are ThinkLess AI.
 
-      Intent: {intent}
-      Image: {image_description}
+      Generate Instagram content immediately.
 
-      Return valid JSON:
+      Do NOT ask questions.
+      Do NOT explain anything.
+      Do NOT add markdown.
+
+      Use the following context:
+
+      Intent: {intent or "General creator content"}
+
+      Image Description: {image_description}
+
+      Return ONLY valid JSON in this exact format:
+
       {{
         "recommended": {{
-          "caption": "",
-          "hook": "",
-          "cta": "",
-          "hashtags": [],
-          "reason": "",
-          "target": ""
+          "caption": "string",
+          "hook": "string",
+          "cta": "string",
+          "hashtags": ["#tag1", "#tag2"],
+          "reason": "string",
+          "target": "string"
         }},
         "alternative_1": {{
-          "caption": "",
-          "reason": "",
-          "target": ""
+          "caption": "string",
+          "reason": "string",
+          "target": "string"
         }},
         "alternative_2": {{
-          "caption": "",
-          "reason": "",
-          "target": ""
+          "caption": "string",
+          "reason": "string",
+          "target": "string"
         }}
       }}
       """

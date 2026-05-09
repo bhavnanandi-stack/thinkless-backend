@@ -11,7 +11,7 @@ async def generate_post(
     platform: str = Form(...),
     intent: str = Form(None)
 ):
-    image_description = "User uploaded creator content image"
+    image_description = "Instagram creator-style image for social media posting"
 
     try:
         ai_response = generate_social_post(
