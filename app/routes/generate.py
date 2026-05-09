@@ -11,12 +11,12 @@ async def generate_post(
     platform: str = Form(...),
     intent: str = Form(None)
 ):
-    image_description = "Instagram creator-style image for social media posting"
+    image_bytes = await image.read()
 
     try:
         ai_response = generate_social_post(
-            image_description=image_description,
-            intent=intent or "Generate engaging Instagram content based on the uploaded image",
+            image_bytes=image_bytes,
+            intent=intent or "",
             platform=platform
         )
 

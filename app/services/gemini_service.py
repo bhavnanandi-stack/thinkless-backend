@@ -1,60 +1,62 @@
 from anthropic import Anthropic
 import os
+import base64
 
 client = Anthropic(
     api_key=os.getenv("ANTHROPIC_API_KEY")
 )
 
-def generate_social_post(image_description, intent, platform):
+def generate_social_post(image_bytes, intent, platform):
+
+    base64_image = base64.b64encode(image_bytes).decode("utf-8")
 
     prompt = f"""
-      You are ThinkLess AI.
+    You are ThinkLess AI.
 
-      Generate Instagram content immediately.
+    Analyze the uploaded image carefully.
 
-      Do NOT ask questions.
-      Do NOT explain anything.
-      Do NOT add markdown.
+    Infer:
+    - image context
+    - content style
+    - likely posting intent
 
-      Use the following context:
+    Then generate:
+    - 1 recommended Instagram post
+    - 2 alternatives
 
-      Intent: {intent or "General creator content"}
+    Rules:
+    - NEVER ask questions
+    - ALWAYS return raw JSON
+    - NEVER use markdown
 
-      Image Description: {image_description}
+    User Intent:
+    {intent or "Infer automatically from image"}
 
-      Return ONLY valid JSON in this exact format:
-
-      {{
-        "recommended": {{
-          "caption": "string",
-          "hook": "string",
-          "cta": "string",
-          "hashtags": ["#tag1", "#tag2"],
-          "reason": "string",
-          "target": "string"
-        }},
-        "alternative_1": {{
-          "caption": "string",
-          "reason": "string",
-          "target": "string"
-        }},
-        "alternative_2": {{
-          "caption": "string",
-          "reason": "string",
-          "target": "string"
-        }}
-      }}
-      """
+    Return JSON only.
+    """
 
     response = client.messages.create(
-        model="claude-haiku-4-5-20251001",
-        max_tokens=500,
+        model="claude-sonnet-4-20250514",
+        max_tokens=700,
         messages=[
             {
                 "role": "user",
-                "content": prompt
+                "content": [
+                    {
+                        "type": "image",
+                        "source": {
+                            "type": "base64",
+                            "media_type": "image/jpeg",
+                            "data": base64_image,
+                        },
+                    },
+                    {
+                        "type": "text",
+                        "text": prompt,
+                    },
+                ],
             }
-        ]
+        ],
     )
 
     return response.content[0].text
