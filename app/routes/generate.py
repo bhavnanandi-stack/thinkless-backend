@@ -21,7 +21,8 @@ async def generate_post(
         )
 
         try:
-            parsed = json.loads(ai_response)
+            cleaned_response = ai_response.replace("```json", "").replace("```", "").strip()
+            parsed = json.loads(cleaned_response)
             return parsed
 
         except Exception:
