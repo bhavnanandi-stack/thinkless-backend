@@ -16,7 +16,7 @@ async def generate_post(
     try:
         ai_response = generate_social_post(
             image_description=image_description,
-            intent or "Generate engaging Instagram content based on the uploaded image",
+            intent=intent or "Generate engaging Instagram content based on the uploaded image",
             platform=platform
         )
 
