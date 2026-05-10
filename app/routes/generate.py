@@ -3,7 +3,7 @@ from app.services.gemini_service import generate_social_post
 import json
 
 router = APIRouter()
-
+DEBUG_MODE = True
 
 @router.post("/generate")
 async def generate_post(
@@ -13,6 +13,37 @@ async def generate_post(
 ):
     image_bytes = await image.read()
 
+    if DEBUG_MODE:
+    return {
+        "analysis": {
+            "context": "Test office bag image",
+            "style": "Professional lifestyle",
+            "intent": "Motivation"
+        },
+
+        "recommended": {
+            "caption": "New bag, fresh mindset, same goals. ✨",
+            "hook": "Small upgrades matter.",
+            "cta": "Keep growing every day.",
+            "hashtags": ["#motivation", "#office", "#growth"],
+            "reason": "Motivational office aesthetic",
+            "target": "Engagement"
+        },
+
+        "alternative_1": {
+            "caption": "Carrying ambition everywhere I go.",
+            "reason": "Professional inspiration",
+            "target": "Reach"
+        },
+
+        "alternative_2": {
+            "caption": "Sometimes growth starts with small changes.",
+            "reason": "Subtle motivation",
+            "target": "Connection"
+        }
+    }
+    if DEBUG_MODE:
+    return mock_response
     try:
         ai_response = generate_social_post(
             image_bytes=image_bytes,
