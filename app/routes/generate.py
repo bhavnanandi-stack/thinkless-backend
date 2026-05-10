@@ -23,7 +23,32 @@ async def generate_post(
         try:
             cleaned_response = ai_response.replace("```json", "").replace("```", "").strip()
             parsed = json.loads(cleaned_response)
-            return parsed
+            normalized_response = {
+                "analysis": parsed.get("analysis", {}),
+
+                "recommended": parsed.get("recommended", {}),
+
+                "alternative_1": (
+                    parsed.get("alternatives", [{}])[0]
+                    if len(parsed.get("alternatives", [])) > 0
+                    else {
+                        "caption": "",
+                        "reason": "",
+                        "target": ""
+                    }
+                ),
+
+                "alternative_2": (
+                    parsed.get("alternatives", [{}, {}])[1]
+                    if len(parsed.get("alternatives", [])) > 1
+                    else {
+                        "caption": "",
+                        "reason": "",
+                        "target": ""
+                    }
+                )
+            }
+            return normalized_response
 
         except Exception:
             return {
