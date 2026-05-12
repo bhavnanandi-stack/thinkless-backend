@@ -15,8 +15,8 @@ async def generate_post(
     image_payloads = []
 
     for image in images:
-    image_bytes = await image.read()
-    image_payloads.append(image_bytes)
+        image_bytes = await image.read()
+        image_payloads.append(image_bytes)
 
     if DEBUG_MODE:
         return {
