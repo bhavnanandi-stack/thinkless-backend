@@ -7,11 +7,16 @@ DEBUG_MODE = True
 
 @router.post("/generate")
 async def generate_post(
-    image: UploadFile = File(...),
+    images: list[UploadFile] = File(...),
     platform: str = Form(...),
     intent: str = Form(None)
 ):
+    print("TOTAL IMAGES:", len(images))
+    image_payloads = []
+
+    for image in images:
     image_bytes = await image.read()
+    image_payloads.append(image_bytes)
 
     if DEBUG_MODE:
         return {
