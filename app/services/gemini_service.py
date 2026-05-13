@@ -35,7 +35,8 @@ def generate_social_post(image_payloads, intent, platform):
         - possible carousel narrative
 
         Then generate:
-        - 1 recommended Instagram carousel post
+        - shared context
+        - one Instagram carousel caption
         - 2 alternatives
 
         Rules:
