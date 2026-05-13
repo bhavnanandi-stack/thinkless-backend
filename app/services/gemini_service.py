@@ -21,30 +21,63 @@ def generate_social_post(image_payloads, intent, platform):
             },
         })
 
-    prompt = f"""
+   prompt = f"""
         You are ThinkLess AI.
 
         Analyze ALL uploaded images together.
 
         Infer:
-        - shared image context
-        - content style
-        - emotional tone
-        - likely posting intent
-        - visual consistency
-        - possible carousel narrative
+        - shared_context
+        - content_style
+        - emotional_tone
+        - posting_intent
+        - visual_consistency
+        - carousel_narrative
 
         Then generate:
-        - shared context
-        - one Instagram carousel caption
-        - 2 alternatives
+        - 1 recommended Instagram carousel caption
+        - 2 alternative captions
 
-        Rules:
-        - NEVER ask questions
-        - ALWAYS return raw JSON
-        - NEVER use markdown
+        IMPORTANT:
+        - Return ONLY valid raw JSON
+        - Do NOT use markdown
+        - Do NOT explain anything
         - Generate ONE unified caption for the full carousel
-        - Return ONLY valid JSON
+
+        Use EXACTLY this JSON structure:
+
+        {{
+        "analysis": {{
+            "shared_context": "",
+            "content_style": "",
+            "emotional_tone": "",
+            "posting_intent": "",
+            "visual_consistency": "",
+            "carousel_narrative": ""
+        }},
+        "recommended": {{
+            "hook": "",
+            "caption": "",
+            "cta": "",
+            "hashtags": [],
+            "reason": "",
+            "target": ""
+        }},
+        "alternatives": [
+            {{
+            "caption": "",
+            "hashtags": [],
+            "reason": "",
+            "target": ""
+            }},
+            {{
+            "caption": "",
+            "hashtags": [],
+            "reason": "",
+            "target": ""
+            }}
+        ]
+        }}
 
         User Intent:
         {intent or "Infer automatically from uploaded images"}
