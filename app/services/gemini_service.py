@@ -43,6 +43,11 @@ def generate_social_post(image_payloads, intent, platform):
         - Do NOT use markdown
         - Do NOT explain anything
         - Generate ONE unified caption for the full carousel
+        - Keep each caption under 50 words
+        - Keep hashtags to maximum 5
+        - Keep hook under 10 words
+        - Keep CTA under 10 words
+        - Keep analysis concise
 
         Use EXACTLY this JSON structure:
 
@@ -59,20 +64,20 @@ def generate_social_post(image_payloads, intent, platform):
             "hook": "",
             "caption": "",
             "cta": "",
-            "hashtags": [],
+            "hashtags": ["", "", "", "", ""]
             "reason": "",
             "target": ""
         }},
         "alternatives": [
             {{
             "caption": "",
-            "hashtags": [],
+            "hashtags": ["", "", "", "", ""]
             "reason": "",
             "target": ""
             }},
             {{
             "caption": "",
-            "hashtags": [],
+            "hashtags": ["", "", "", "", ""]
             "reason": "",
             "target": ""
             }}
