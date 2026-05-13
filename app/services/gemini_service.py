@@ -52,6 +52,10 @@ def generate_social_post(image_payloads, intent, platform):
 
         Return JSON only.
         """
+        content.append({
+            "type": "text",
+            "text": prompt
+            })
     response = client.messages.create(
         #model="claude-sonnet-4-20250514",
         model="claude-haiku-4-5-20251001",
