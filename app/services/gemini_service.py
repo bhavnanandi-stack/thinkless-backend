@@ -6,35 +6,50 @@ client = Anthropic(
     api_key=os.getenv("ANTHROPIC_API_KEY")
 )
 
-def generate_social_post(image_bytes, intent, platform):
+def generate_social_post(image_payloads, intent, platform):
 
-    base64_image = base64.b64encode(image_bytes).decode("utf-8")
+    content = []
+    for image_bytes in image_payloads:
+        base64_image = base64.b64encode(image_bytes).decode("utf-8")
+
+        content.append({
+            "type": "image",
+            "source": {
+                "type": "base64",
+                "media_type": "image/jpeg",
+                "data": base64_image,
+            },
+        })
 
     prompt = f"""
-    You are ThinkLess AI.
+        You are ThinkLess AI.
 
-    Analyze the uploaded image carefully.
+        Analyze ALL uploaded images together.
 
-    Infer:
-    - image context
-    - content style
-    - likely posting intent
+        Infer:
+        - shared image context
+        - content style
+        - emotional tone
+        - likely posting intent
+        - visual consistency
+        - possible carousel narrative
 
-    Then generate:
-    - 1 recommended Instagram post
-    - 2 alternatives
+        Then generate:
+        - 1 recommended Instagram carousel post
+        - 2 alternatives
 
-    Rules:
-    - NEVER ask questions
-    - ALWAYS return raw JSON
-    - NEVER use markdown
+        Rules:
+        - NEVER ask questions
+        - ALWAYS return raw JSON
+        - NEVER use markdown
+        - Generate ONE unified caption for the full carousel
+        - Return ONLY valid JSON
 
-    User Intent:
-    {intent or "Infer automatically from image"}
+        User Intent:
+        {intent or "Infer automatically from uploaded images"}
 
-    Return JSON only.
-    """
-
+        Return JSON only.
+        """
     response = client.messages.create(
         #model="claude-sonnet-4-20250514",
         model="claude-haiku-4-5-20251001",
@@ -42,22 +57,9 @@ def generate_social_post(image_bytes, intent, platform):
         messages=[
             {
                 "role": "user",
-                "content": [
-                    {
-                        "type": "image",
-                        "source": {
-                            "type": "base64",
-                            "media_type": "image/jpeg",
-                            "data": base64_image,
-                        },
-                    },
-                    {
-                        "type": "text",
-                        "text": prompt,
-                    },
-                ],
+                "content": content
             }
         ],
     )
-
+  
     return response.content[0].text

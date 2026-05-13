@@ -12,7 +12,8 @@ async def generate_post(
     intent: str = Form(None)
 ):
     print("TOTAL IMAGES:", len(images))
-    print(image.filename)
+    for image in images:
+    print("IMAGE:", image.filename)
     image_payloads = []
 
     for image in images:
@@ -48,11 +49,10 @@ async def generate_post(
                 "target": "Connection"
             }
         }
-    if DEBUG_MODE:
-        return mock_response
+    
     try:
         ai_response = generate_social_post(
-            image_bytes=image_bytes,
+            image_payloads=image_payloads,
             intent=intent or "",
             platform=platform
         )
