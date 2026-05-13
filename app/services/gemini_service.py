@@ -21,7 +21,7 @@ def generate_social_post(image_payloads, intent, platform):
             },
         })
 
-   prompt = f"""
+    prompt = f"""
         You are ThinkLess AI.
 
         Analyze ALL uploaded images together.
@@ -83,7 +83,7 @@ def generate_social_post(image_payloads, intent, platform):
         {intent or "Infer automatically from uploaded images"}
 
         Return JSON only.
-        """
+    """
     content.append({
         "type": "text",
         "text": prompt
