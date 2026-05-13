@@ -13,7 +13,7 @@ async def generate_post(
 ):
     print("TOTAL IMAGES:", len(images))
     for image in images:
-    print("IMAGE:", image.filename)
+        print("IMAGE:", image.filename)
     image_payloads = []
 
     for image in images:
