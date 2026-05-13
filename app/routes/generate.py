@@ -12,6 +12,7 @@ async def generate_post(
     intent: str = Form(None)
 ):
     print("TOTAL IMAGES:", len(images))
+    print(image.filename)
     image_payloads = []
 
     for image in images:
