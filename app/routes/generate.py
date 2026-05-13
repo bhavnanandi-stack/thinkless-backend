@@ -10,15 +10,18 @@ async def generate_post(
     images: list[UploadFile] = File(...),
     platform: str = Form(...),
     intent: str = Form(None)
-):
+    ):
     print("TOTAL IMAGES:", len(images))
     for image in images:
         print("IMAGE:", image.filename)
-    image_payloads = []
+        image_payloads = []
 
     for image in images:
         image_bytes = await image.read()
-        image_payloads.append(image_bytes)
+        image_payloads.append({
+            "bytes": image_bytes,
+            "media_type": image.content_type
+        })
 
     if DEBUG_MODE:
         return {

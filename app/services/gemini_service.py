@@ -10,9 +10,7 @@ def generate_social_post(image_payloads, intent, platform):
 
     content = []
     for image_data in image_payloads:
-        base64_image = base64.b64encode(
-            image_data["bytes"]
-            ).decode("utf-8")
+        base64_image = base64.b64encode(image_data["bytes"]).decode("utf-8")
 
         content.append({
             "type": "image",
