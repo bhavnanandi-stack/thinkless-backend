@@ -3,7 +3,7 @@ from app.services.gemini_service import generate_social_post
 import json
 
 router = APIRouter()
-DEBUG_MODE = True
+DEBUG_MODE = False
 
 @router.post("/generate")
 async def generate_post(
