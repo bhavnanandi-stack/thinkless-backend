@@ -69,20 +69,32 @@ async def generate_post(
                 "recommended": parsed.get("recommended", {}),
 
                 "alternative_1": (
-                    parsed.get("alternatives", [{}])[0]
+                    {
+                        "caption": parsed["alternatives"][0].get("caption", ""),
+                        "hashtags": parsed["alternatives"][0].get("hashtags", []),
+                        "reason": parsed["alternatives"][0].get("reason", ""),
+                        "target": parsed["alternatives"][0].get("target", "")
+                    }
                     if len(parsed.get("alternatives", [])) > 0
                     else {
                         "caption": "",
+                        "hashtags": [],
                         "reason": "",
                         "target": ""
                     }
                 ),
 
                 "alternative_2": (
-                    parsed.get("alternatives", [{}, {}])[1]
+                    {
+                        "caption": parsed["alternatives"][1].get("caption", ""),
+                        "hashtags": parsed["alternatives"][1].get("hashtags", []),
+                        "reason": parsed["alternatives"][1].get("reason", ""),
+                        "target": parsed["alternatives"][1].get("target", "")
+                    }
                     if len(parsed.get("alternatives", [])) > 1
                     else {
                         "caption": "",
+                        "hashtags": [],
                         "reason": "",
                         "target": ""
                     }
