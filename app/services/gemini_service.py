@@ -108,5 +108,26 @@ def generate_social_post(image_payloads, intent, platform):
                     }
                 ],
             )
+
+        return response.content[0].text   
+        
+        except APIStatusError as e:
+        print(f"Claude API Error: {e}")
+
+        # Retry only for overload
+        if e.status_code == 529:
+            wait_time = 2 ** attempt
+
+            print(
+                f"Claude overloaded. Retrying in {wait_time}s..."
+            )
+
+            time.sleep(wait_time)
+            continue
+
+        raise
+
+        raise Exception(
+            "Claude API unavailable after retries."
+        )
   
-    return response.content[0].text
