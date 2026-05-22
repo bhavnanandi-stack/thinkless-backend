@@ -1,6 +1,8 @@
 from anthropic import Anthropic
 import os
 import base64
+import time
+from anthropic import APIStatusError
 
 client = Anthropic(
     api_key=os.getenv("ANTHROPIC_API_KEY")
@@ -93,16 +95,18 @@ def generate_social_post(image_payloads, intent, platform):
         "type": "text",
         "text": prompt
         })
-    response = client.messages.create(
-        #model="claude-sonnet-4-20250514",
-        model="claude-haiku-4-5-20251001",
-        max_tokens=700,
-        messages=[
-            {
-                "role": "user",
-                "content": content
-            }
-        ],
-    )
+    MAX_RETRIES = 3    
+    for attempt in range(MAX_RETRIES):
+        try:
+            response = client.messages.create(
+                model="claude-haiku-4-5-20251001",
+                max_tokens=700,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": content
+                    }
+                ],
+            )
   
     return response.content[0].text
