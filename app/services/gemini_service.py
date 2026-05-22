@@ -95,39 +95,58 @@ def generate_social_post(image_payloads, intent, platform):
         "type": "text",
         "text": prompt
         })
-    MAX_RETRIES = 3    
-    for attempt in range(MAX_RETRIES):
-        try:
-            response = client.messages.create(
-                model="claude-haiku-4-5-20251001",
-                max_tokens=700,
-                messages=[
-                    {
-                        "role": "user",
-                        "content": content
-                    }
-                ],
-            )
 
-            return response.content[0].text   
-        
-        except APIStatusError as e:
-            print(f"Claude API Error: {e}")
+    MODELS = [
+    "claude-haiku-4-5-20251001",
+    "claude-sonnet-4-20250514",
+    ]
+    MAX_RETRIES = 2
 
-            # Retry only for overload
-            if e.status_code == 529:
-                wait_time = 2 ** attempt
+    last_error = None
 
-                print(
-                    f"Claude overloaded. Retrying in {wait_time}s..."
+    for model_name in MODELS:
+        print(f"Trying model: {model_name}")
+
+        for attempt in range(MAX_RETRIES):
+            try:
+                response = client.messages.create(
+                    model=model_name,
+                    max_tokens=700,
+                    messages=[
+                        {
+                            "role": "user",
+                            "content": content
+                        }
+                    ],
                 )
 
-                time.sleep(wait_time)
-                continue
+                print(
+                    f"Success using {model_name}"
+                )
 
-            raise
+                return response.content[0].text
+
+            except APIStatusError as e:
+                last_error = e
+
+                print(
+                    f"{model_name} error: {e}"
+                )
+
+                # retry only overload
+                if e.status_code == 529:
+                    wait_time = 2 ** attempt
+
+                    print(
+                        f"Retrying in {wait_time}s..."
+                    )
+
+                    time.sleep(wait_time)
+                    continue
+
+                break
 
     raise Exception(
-        "Claude API unavailable after retries."
+        f"Claude unavailable. Last error: {last_error}"
     )
   
