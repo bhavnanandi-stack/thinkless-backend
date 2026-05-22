@@ -71,34 +71,46 @@ async def generate_post(
                 "alternative_1": (
                     {
                         "caption": parsed["alternatives"][0].get("caption", ""),
-                        "hashtags": parsed["alternatives"][0].get("hashtags", []),
-                        "reason": parsed["alternatives"][0].get("reason", ""),
-                        "target": parsed["alternatives"][0].get("target", "")
+                        "hashtags": parsed["alternatives"][0].get(
+                            "hashtags", []
+                        ),
+                        "reason": parsed["alternatives"][0].get(
+                            "reason", ""
+                        ),
+                        "target": parsed["alternatives"][0].get(
+                            "target", ""
+                        ),
                     }
                     if len(parsed.get("alternatives", [])) > 0
                     else {
                         "caption": "",
                         "hashtags": [],
                         "reason": "",
-                        "target": ""
+                        "target": "",
                     }
                 ),
 
                 "alternative_2": (
                     {
-                        "caption": parsed["alternatives"][1].get("caption", ""),
-                        "hashtags": parsed["alternatives"][1].get("hashtags", []),
-                        "reason": parsed["alternatives"][1].get("reason", ""),
-                        "target": parsed["alternatives"][1].get("target", "")
+                        "caption": parsed["alternatives"][0].get("caption", ""),
+                        "hashtags": parsed["alternatives"][0].get(
+                            "hashtags", []
+                        ),
+                        "reason": parsed["alternatives"][0].get(
+                            "reason", ""
+                        ),
+                        "target": parsed["alternatives"][0].get(
+                            "target", ""
+                        ),
                     }
-                    if len(parsed.get("alternatives", [])) > 1
+                    if len(parsed.get("alternatives", [])) > 0
                     else {
                         "caption": "",
                         "hashtags": [],
                         "reason": "",
-                        "target": ""
+                        "target": "",
                     }
-                )
+                ),
             }
             return normalized_response
 
