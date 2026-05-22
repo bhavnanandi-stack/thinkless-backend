@@ -92,14 +92,14 @@ async def generate_post(
 
                 "alternative_2": (
                     {
-                        "caption": parsed["alternatives"][0].get("caption", ""),
-                        "hashtags": parsed["alternatives"][0].get(
+                        "caption": parsed["alternatives"][1].get("caption", ""),
+                        "hashtags": parsed["alternatives"][1].get(
                             "hashtags", []
                         ),
-                        "reason": parsed["alternatives"][0].get(
+                        "reason": parsed["alternatives"][1].get(
                             "reason", ""
                         ),
-                        "target": parsed["alternatives"][0].get(
+                        "target": parsed["alternatives"][1].get(
                             "target", ""
                         ),
                     }
@@ -127,11 +127,13 @@ async def generate_post(
                 "alternative_1": {
                     "caption": "Alternative caption unavailable.",
                     "reason": "Fallback",
+                    "hashtags": [],
                     "target": "Reach"
                 },
                 "alternative_2": {
                     "caption": "Alternative caption unavailable.",
                     "reason": "Fallback",
+                    "hashtags": [],
                     "target": "Engagement"
                 }
             }
@@ -151,11 +153,13 @@ async def generate_post(
             "alternative_1": {
                 "caption": "Fallback response",
                 "reason": "Debug",
+                "hashtags": [],
                 "target": "Reach"
             },
             "alternative_2": {
                 "caption": "Fallback response",
                 "reason": "Debug",
+                "hashtags": [],
                 "target": "Engagement"
             }
         }
